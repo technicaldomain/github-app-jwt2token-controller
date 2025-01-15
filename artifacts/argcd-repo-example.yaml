@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repo-1294444111
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  enableOCI: "true"
+  name: helm
+  password: supersecret
+  type: helm
+  url: ghcr.io/kharkevich/helm-charts-private
+  username: x-access-token
+type: Opaque

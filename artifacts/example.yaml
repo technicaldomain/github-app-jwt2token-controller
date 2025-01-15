@@ -1,0 +1,32 @@
+apiVersion: githubapp.kharkevich.org/v1
+kind: ArgoCDRepo
+metadata:
+  name: example-argo-github-app
+  namespace: default
+spec:
+  privateKeySecret: github-app-private-key
+  argoCDRepositories:
+    - repository: repo-1294444111
+      namespace: argocd
+---
+apiVersion: githubapp.kharkevich.org/v1
+kind: ArgoCDRepo
+metadata:
+  name: example-argo-another-github-app
+  namespace: default
+spec:
+  privateKeySecret: github-app-private-key
+  argoCDRepositories:
+    - repository: repo-1294444122
+      namespace: argocd
+---
+apiVersion: githubapp.kharkevich.org/v1
+kind: DockerConfigJson
+metadata:
+  name: example-docker-config
+  namespace: default
+spec:
+  privateKeySecret: github-app-private-key
+  dockerConfigSecrets:
+    - secret: ghcr
+      namespace: argocd

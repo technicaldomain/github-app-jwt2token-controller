@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-app-private-key
+  namespace: default
+stringData:
+  appId: "1111111"
+  installationId: "2222222"
+  privateKey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIICWgIBAAKBgExrZNCJPDFzjkAzOwlJASNurUkmgzy66yx2tXf1xVZanMN8w5zq
+    jQGct+vv3TAXEix5qHG+yMfY0tz2NVEYKcNKjcQnvbDpLtm9qjZgZ2UiDI92civR
+    lIGt/0DzXp3Ooq2wxW3rUoIBQE5kBMFdvxJ/QC0zGrKjbQciABTHgj49AgMBAAEC
+    gYBJtyauilMIGMHVaBXApS118mMxtvbNdDk60N/H8coDvLCPWiCPkymlrnk0HFMu
+    +nJLeKdl4XVoYd01zEIuEbLmYpdafLW5GZ9QtUBno7wVh1js3ahbbwy1+Isj1Xk1
+    Wu7nKDbkgYirwb0Ly+CmrieQ+X/Pnm8Z7eyfpPYSDhMQuQJBAJfjfbtAdAuSrS+A
+    v9Ti0uqHVzcUeBTF1JWFYnvIRdnx/S4geLdVxmI6Lque5jJdkB2Vmb38fVZzi7Sh
+    DKBqT08CQQCAzQgNrpPPhjdn115P9ZAOh5uo7lZFFG+7mc065cZaJyT+PgyuI5pI
+    wjdM/Ne/mVSy9eI6GydG+JGWcTOo5BazAkAKBqQ4Bgsi8G2qIw+Gl+pgPMrPAfTj
+    OiPMMt/LV+70cfrKXq5ZO7o6paiK/5QmYvKuYT+iwNXtLPdd1vukYyAVAkAaLA93
+    4EKOx8IYaq3yZ36nRSz/LbcAAIAXyc/nKOueRBgDRY6EEB34rOZZ0YLxnvGUD9yx
+    W/UmObozrLsHlZl7AkBxoq8qqsNkcQtz970QPoh9WSAIk0afOgcWKyKIyeN8Uu2i
+    qraqR6mYwgJSPcc1RbOD7ykdMMq03g6upsk4Ws0P
+    -----END RSA PRIVATE KEY-----
+type: Opaque
