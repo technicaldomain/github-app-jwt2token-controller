@@ -1,5 +1,5 @@
 /*
-Copyright The Kubernetes Authors.
+Copyright 2025 Alexander Kharkevich
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ type Interface interface {
 	ArgoCDRepos() ArgoCDRepoInformer
 	// DockerConfigJsons returns a DockerConfigJsonInformer.
 	DockerConfigJsons() DockerConfigJsonInformer
+	// GHSs returns a GHSInformer.
+	GHSs() GHSInformer
 }
 
 type version struct {
@@ -48,4 +50,9 @@ func (v *version) ArgoCDRepos() ArgoCDRepoInformer {
 // DockerConfigJsons returns a DockerConfigJsonInformer.
 func (v *version) DockerConfigJsons() DockerConfigJsonInformer {
 	return &dockerConfigJsonInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// GHSs returns a GHSInformer.
+func (v *version) GHSs() GHSInformer {
+	return &gHSInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

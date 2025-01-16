@@ -42,7 +42,6 @@ type ArgoCDRepositories struct {
 
 type ArgoCDRepoStatus struct {
 	Token     string      `json:"token,omitempty"`
-	ExpiresAt metav1.Time `json:"expiresAt,omitempty"` // New field to track JWT expiration time
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -54,7 +53,6 @@ type ArgoCDRepoList struct {
 
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-
 type DockerConfigJson struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -77,7 +75,6 @@ type DockerConfigSecrets struct {
 
 type DockerConfigJsonStatus struct {
 	Token     string      `json:"token,omitempty"`
-	ExpiresAt metav1.Time `json:"expiresAt,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -85,4 +82,29 @@ type DockerConfigJsonList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []DockerConfigJson `json:"items"`
+}
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type GHS struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   GHSSpec   `json:"spec,omitempty"`
+	Status GHSStatus `json:"status,omitempty"`
+}
+
+type GHSSpec struct {
+	Token string `json:"token"`
+}
+
+type GHSStatus struct {
+	ExpiresAt metav1.Time `json:"expiresAt,omitempty"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type GHSList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []GHS `json:"items"`
 }

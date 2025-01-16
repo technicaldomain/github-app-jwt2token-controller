@@ -70,6 +70,9 @@ func main() {
 	dockerConfigJsonController := NewDockerConfigJsonController(ctx, kubeClient, gitHubAppJWT2TokenClient,
 		githubAppInformerFactory.Githubapp().V1().DockerConfigJsons())
 
+	ghsController := NewGHSController(ctx, kubeClient, gitHubAppJWT2TokenClient,
+		githubAppInformerFactory.Githubapp().V1().GHSs())
+
 	// notice that there is no need to run Start methods in a separate goroutine. (i.e. go kubeInformerFactory.Start(ctx.done())
 	// Start method is non-blocking and runs all registered informers in a dedicated goroutine.
 	kubeInformerFactory.Start(ctx.Done())
@@ -85,6 +88,13 @@ func main() {
 	go func() {
 		if err = dockerConfigJsonController.Run(ctx, 2); err != nil {
 			logger.Error(err, "Error running DockerConfigJson controller")
+			klog.FlushAndExit(klog.ExitFlushTimeout, 1)
+		}
+	}()
+
+	go func() {
+		if err = ghsController.Run(ctx, 2); err != nil {
+			logger.Error(err, "Error running GHS controller")
 			klog.FlushAndExit(klog.ExitFlushTimeout, 1)
 		}
 	}()

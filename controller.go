@@ -16,6 +16,13 @@ limitations under the License.
 
 package main
 
+import (
+	"context"
+
+	clientset "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
+	"github.com/kharkevich/github-app-jwt2token-controller/pkg/ghsutil"
+)
+
 const controllerAgentName = "github-app-jwt2token"
 
 const (
@@ -25,3 +32,11 @@ const (
 	MessageTokenUpdated = "The token has been refreshed"
 	FieldManager        = controllerAgentName
 )
+
+func shouldRegenerateToken(ctx context.Context, clientset clientset.Interface, tockenHash string, namespace string) bool {
+	ghs, err := ghsutil.GetGHS(ctx, clientset, tockenHash, namespace)
+	if err != nil || ghs == nil {
+		return true
+	}
+	return false
+}

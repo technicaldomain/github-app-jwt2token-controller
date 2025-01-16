@@ -23,24 +23,24 @@ import (
 	gentype "k8s.io/client-go/gentype"
 )
 
-// fakeArgoCDRepos implements ArgoCDRepoInterface
-type fakeArgoCDRepos struct {
-	*gentype.FakeClientWithList[*v1.ArgoCDRepo, *v1.ArgoCDRepoList]
+// fakeGHSs implements GHSInterface
+type fakeGHSs struct {
+	*gentype.FakeClientWithList[*v1.GHS, *v1.GHSList]
 	Fake *FakeGithubappV1
 }
 
-func newFakeArgoCDRepos(fake *FakeGithubappV1, namespace string) githubappjwt2tokenv1.ArgoCDRepoInterface {
-	return &fakeArgoCDRepos{
-		gentype.NewFakeClientWithList[*v1.ArgoCDRepo, *v1.ArgoCDRepoList](
+func newFakeGHSs(fake *FakeGithubappV1, namespace string) githubappjwt2tokenv1.GHSInterface {
+	return &fakeGHSs{
+		gentype.NewFakeClientWithList[*v1.GHS, *v1.GHSList](
 			fake.Fake,
 			namespace,
-			v1.SchemeGroupVersion.WithResource("argocdrepos"),
-			v1.SchemeGroupVersion.WithKind("ArgoCDRepo"),
-			func() *v1.ArgoCDRepo { return &v1.ArgoCDRepo{} },
-			func() *v1.ArgoCDRepoList { return &v1.ArgoCDRepoList{} },
-			func(dst, src *v1.ArgoCDRepoList) { dst.ListMeta = src.ListMeta },
-			func(list *v1.ArgoCDRepoList) []*v1.ArgoCDRepo { return gentype.ToPointerSlice(list.Items) },
-			func(list *v1.ArgoCDRepoList, items []*v1.ArgoCDRepo) { list.Items = gentype.FromPointerSlice(items) },
+			v1.SchemeGroupVersion.WithResource("ghss"),
+			v1.SchemeGroupVersion.WithKind("GHS"),
+			func() *v1.GHS { return &v1.GHS{} },
+			func() *v1.GHSList { return &v1.GHSList{} },
+			func(dst, src *v1.GHSList) { dst.ListMeta = src.ListMeta },
+			func(list *v1.GHSList) []*v1.GHS { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1.GHSList, items []*v1.GHS) { list.Items = gentype.FromPointerSlice(items) },
 		),
 		fake,
 	}

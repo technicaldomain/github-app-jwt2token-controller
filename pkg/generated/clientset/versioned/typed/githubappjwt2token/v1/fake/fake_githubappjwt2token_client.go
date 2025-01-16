@@ -1,5 +1,5 @@
 /*
-Copyright The Kubernetes Authors.
+Copyright 2025 Alexander Kharkevich
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ func (c *FakeGithubappV1) ArgoCDRepos(namespace string) v1.ArgoCDRepoInterface {
 
 func (c *FakeGithubappV1) DockerConfigJsons(namespace string) v1.DockerConfigJsonInterface {
 	return newFakeDockerConfigJsons(c, namespace)
+}
+
+func (c *FakeGithubappV1) GHSs(namespace string) v1.GHSInterface {
+	return newFakeGHSs(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

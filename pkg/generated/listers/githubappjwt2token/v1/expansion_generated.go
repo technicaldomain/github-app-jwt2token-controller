@@ -1,5 +1,5 @@
 /*
-Copyright The Kubernetes Authors.
+Copyright 2025 Alexander Kharkevich
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,3 +32,11 @@ type DockerConfigJsonListerExpansion interface{}
 // DockerConfigJsonNamespaceListerExpansion allows custom methods to be added to
 // DockerConfigJsonNamespaceLister.
 type DockerConfigJsonNamespaceListerExpansion interface{}
+
+// GHSListerExpansion allows custom methods to be added to
+// GHSLister.
+type GHSListerExpansion interface{}
+
+// GHSNamespaceListerExpansion allows custom methods to be added to
+// GHSNamespaceLister.
+type GHSNamespaceListerExpansion interface{}

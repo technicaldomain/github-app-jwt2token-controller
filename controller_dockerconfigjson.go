@@ -19,7 +19,9 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/md5"
 	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -44,6 +46,7 @@ import (
 	jwt2tokenAppScheme "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/scheme"
 	informers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token/v1"
 	listers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/listers/githubappjwt2token/v1"
+	"github.com/kharkevich/github-app-jwt2token-controller/pkg/ghsutil"
 	"github.com/kharkevich/github-app-jwt2token-controller/pkg/tokenutil"
 )
 
@@ -99,8 +102,7 @@ func (c *DockerConfigJsonController) Run(ctx context.Context, workers int) error
 	defer utilruntime.HandleCrash()
 	defer c.workqueue.ShutDown()
 	logger := klog.FromContext(ctx)
-
-	logger.V(4).Info("Starting DockerConfigJson controller")
+	klog.Info("Starting DockerConfigJson controller")
 
 	if ok := cache.WaitForCacheSync(ctx.Done(), c.dockerConfigJsonSynced); !ok {
 		return fmt.Errorf("failed to wait for caches to sync")
@@ -163,15 +165,21 @@ func (c *DockerConfigJsonController) syncHandler(ctx context.Context, objectRef 
 	if err != nil {
 		return err
 	}
-
-	if dockerConfigJson.Status.Token == "" || time.Until(dockerConfigJson.Status.ExpiresAt.Time) < 3*time.Minute {
+	if shouldRegenerateToken(ctx, c.dockerConfigJsonClientset, dockerConfigJson.Status.Token, dockerConfigJson.Namespace) {
 		token, expiresAt, err := c.retrieveDockerConfigToken(dockerConfigJson)
 		if err != nil {
 			logger.Error(err, "Failed to retrieve GitHub token for DockerConfigJson", "namespace", dockerConfigJson.Namespace, "name", dockerConfigJson.Name)
 			return err
 		}
-		dockerConfigJson.Status.Token = token
-		dockerConfigJson.Status.ExpiresAt = metav1.NewTime(expiresAt)
+
+		hash := md5.Sum([]byte(token))
+		tokenHash := hex.EncodeToString(hash[:])
+		dockerConfigJson.Status.Token = tokenHash
+
+		err = ghsutil.CreateOrUpdateGHS(ctx, c.dockerConfigJsonClientset, tokenHash, token, dockerConfigJson.Namespace, expiresAt)
+		if err != nil {
+			return err
+		}
 
 		err = c.updateDockerConfigJsonStatus(ctx, dockerConfigJson)
 		if err != nil {
@@ -191,6 +199,7 @@ func (c *DockerConfigJsonController) syncHandler(ctx context.Context, objectRef 
 	c.recorder.Event(dockerConfigJson, corev1.EventTypeNormal, SuccessSynced, MessageTokenValid)
 	return nil
 }
+
 func (c *DockerConfigJsonController) isControlledByUs(dockerConfigJson *githubappjwt2tokenv1.DockerConfigJson) bool {
 	for _, ref := range dockerConfigJson.OwnerReferences {
 		if ref.Controller != nil && *ref.Controller {
@@ -240,7 +249,14 @@ func (c *DockerConfigJsonController) updateDockerConfigJsonStatus(ctx context.Co
 
 func (c *DockerConfigJsonController) updateDockerConfigSecret(ctx context.Context, dockerConfigJson *githubappjwt2tokenv1.DockerConfigJson) error {
 	for _, secretConfig := range dockerConfigJson.Spec.DockerConfigSecrets {
-		auth := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", secretConfig.Username, dockerConfigJson.Status.Token)))
+		logger := klog.LoggerWithValues(klog.FromContext(ctx), "secret", secretConfig.Secret, "namespace", secretConfig.Namespace)
+		ghs_token, err := ghsutil.GetGHS(ctx, c.dockerConfigJsonClientset, dockerConfigJson.Status.Token, dockerConfigJson.Namespace)
+		if err != nil {
+			logger.Error(err, "Failed to retrieve GHS")
+			return err
+		}
+
+		auth := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", secretConfig.Username, ghs_token.Spec.Token)))
 		dockerConfigJsonData, err := json.Marshal(map[string]interface{}{
 			"auths": map[string]interface{}{
 				secretConfig.Registry: map[string]string{
@@ -252,7 +268,6 @@ func (c *DockerConfigJsonController) updateDockerConfigSecret(ctx context.Contex
 			return err
 		}
 
-		logger := klog.LoggerWithValues(klog.FromContext(ctx), "secret", secretConfig.Secret, "namespace", secretConfig.Namespace)
 		logger.V(4).Info("Updating DockerConfig Secret")
 
 		secret, err := c.kubeclientset.CoreV1().Secrets(secretConfig.Namespace).Get(ctx, secretConfig.Secret, metav1.GetOptions{})

@@ -1,5 +1,5 @@
 /*
-Copyright The Kubernetes Authors.
+Copyright 2025 Alexander Kharkevich
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ type GithubappV1Interface interface {
 	RESTClient() rest.Interface
 	ArgoCDReposGetter
 	DockerConfigJsonsGetter
+	GHSsGetter
 }
 
 // GithubappV1Client is used to interact with features provided by the githubapp.kharkevich.org group.
@@ -42,6 +43,10 @@ func (c *GithubappV1Client) ArgoCDRepos(namespace string) ArgoCDRepoInterface {
 
 func (c *GithubappV1Client) DockerConfigJsons(namespace string) DockerConfigJsonInterface {
 	return newDockerConfigJsons(c, namespace)
+}
+
+func (c *GithubappV1Client) GHSs(namespace string) GHSInterface {
+	return newGHSs(c, namespace)
 }
 
 // NewForConfig creates a new GithubappV1Client for the given config.

@@ -51,6 +51,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&ArgoCDRepoList{},
 		&DockerConfigJson{},
 		&DockerConfigJsonList{},
+		&GHS{},
+		&GHSList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

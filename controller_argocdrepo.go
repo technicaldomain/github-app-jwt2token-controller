@@ -19,6 +19,8 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"time"
 
@@ -42,6 +44,7 @@ import (
 	jwt2tokenAppScheme "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/scheme"
 	informers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token/v1"
 	listers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/listers/githubappjwt2token/v1"
+	"github.com/kharkevich/github-app-jwt2token-controller/pkg/ghsutil"
 	"github.com/kharkevich/github-app-jwt2token-controller/pkg/tokenutil"
 )
 
@@ -97,8 +100,7 @@ func (c *ArgoCDRepoController) Run(ctx context.Context, workers int) error {
 	defer utilruntime.HandleCrash()
 	defer c.workqueue.ShutDown()
 	logger := klog.FromContext(ctx)
-
-	logger.V(4).Info("Starting ArgoCDRepo controller")
+	klog.Info("Starting ArgoCDRepo controller")
 
 	if ok := cache.WaitForCacheSync(ctx.Done(), c.argoCDRepoSynced); !ok {
 		return fmt.Errorf("failed to wait for caches to sync")
@@ -162,14 +164,21 @@ func (c *ArgoCDRepoController) syncHandler(ctx context.Context, objectRef cache.
 		return err
 	}
 
-	if argoCDRepo.Status.Token == "" || time.Until(argoCDRepo.Status.ExpiresAt.Time) < 3*time.Minute {
+	if shouldRegenerateToken(ctx, c.argoCDRepoClientset, argoCDRepo.Status.Token, argoCDRepo.Namespace) {
 		token, expiresAt, err := c.retrieveArgoCDRepoToken(argoCDRepo)
 		if err != nil {
 			logger.Error(err, "Failed to retrieve GitHub token for ArgoCDRepo", "namespace", argoCDRepo.Namespace, "name", argoCDRepo.Name)
 			return err
 		}
-		argoCDRepo.Status.Token = token
-		argoCDRepo.Status.ExpiresAt = metav1.NewTime(expiresAt)
+
+		hash := md5.Sum([]byte(token))
+		tokenHash := hex.EncodeToString(hash[:])
+		argoCDRepo.Status.Token = tokenHash
+
+		err = ghsutil.CreateOrUpdateGHS(ctx, c.argoCDRepoClientset, tokenHash, token, argoCDRepo.Namespace, expiresAt)
+		if err != nil {
+			return err
+		}
 
 		err = c.updateArgoCDRepoStatus(ctx, argoCDRepo)
 		if err != nil {
@@ -257,9 +266,15 @@ func (c *ArgoCDRepoController) updateArgoCDSecret(ctx context.Context, argoCDRep
 			return err
 		}
 
-		if !bytes.Equal(secret.Data["password"], []byte(argoCDRepo.Status.Token)) {
+		ghs_token, err := ghsutil.GetGHS(ctx, c.argoCDRepoClientset, argoCDRepo.Status.Token, argoCDRepo.Namespace)
+		if err != nil {
+			logger.Error(err, "Failed to retrieve GHS")
+			return err
+		}
+
+		if !bytes.Equal(secret.Data["password"], []byte(ghs_token.Spec.Token)) {
 			secretCopy := secret.DeepCopy()
-			secretCopy.Data["password"] = []byte(argoCDRepo.Status.Token)
+			secretCopy.Data["password"] = []byte(ghs_token.Spec.Token)
 			_, err = c.kubeclientset.CoreV1().Secrets(repo.Namespace).Update(ctx, secretCopy, metav1.UpdateOptions{})
 			if err != nil {
 				return err

@@ -1,5 +1,5 @@
 /*
-Copyright The Kubernetes Authors.
+Copyright 2025 Alexander Kharkevich
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -56,6 +56,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().ArgoCDRepos().Informer()}, nil
 	case v1.SchemeGroupVersion.WithResource("dockerconfigjsons"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().DockerConfigJsons().Informer()}, nil
+	case v1.SchemeGroupVersion.WithResource("ghss"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().GHSs().Informer()}, nil
 
 	}
 
