@@ -20,14 +20,14 @@ import (
 	"flag"
 	"time"
 
-	"github.com/kharkevich/github-app-jwt2token-controller/pkg/signals"
+	"github.com/technicaldomain/github-app-jwt2token-controller/pkg/signals"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/klog/v2"
 
-	clientset "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
-	informers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions"
+	clientset "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
+	informers "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/informers/externalversions"
 )
 
 var (

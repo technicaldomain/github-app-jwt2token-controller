@@ -20,7 +20,7 @@ package externalversions
 import (
 	fmt "fmt"
 
-	v1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
+	v1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -51,7 +51,7 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=githubapp.kharkevich.org, Version=v1
+	// Group=githubapp.technicaldomain.xyz, Version=v1
 	case v1.SchemeGroupVersion.WithResource("argocdrepos"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().ArgoCDRepos().Informer()}, nil
 	case v1.SchemeGroupVersion.WithResource("dockerconfigjsons"):

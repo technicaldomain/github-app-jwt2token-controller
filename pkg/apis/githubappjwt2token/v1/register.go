@@ -21,7 +21,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	githubappjwt2token "github.com/kharkevich/github-app-jwt2token-controller/pkg/apis/githubappjwt2token"
+	githubappjwt2token "github.com/technicaldomain/github-app-jwt2token-controller/pkg/apis/githubappjwt2token"
 )
 
 // SchemeGroupVersion is group version used to register these objects

@@ -21,7 +21,7 @@ import (
 	fmt "fmt"
 	http "net/http"
 
-	githubappv1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1"
+	githubappv1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

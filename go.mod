@@ -1,4 +1,4 @@
-module github.com/kharkevich/github-app-jwt2token-controller
+module github.com/technicaldomain/github-app-jwt2token-controller
 
 go 1.23.0
 

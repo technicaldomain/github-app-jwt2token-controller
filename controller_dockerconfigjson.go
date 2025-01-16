@@ -41,13 +41,13 @@ import (
 	"k8s.io/client-go/util/workqueue"
 	"k8s.io/klog/v2"
 
-	githubappjwt2tokenv1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
-	clientset "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
-	jwt2tokenAppScheme "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/scheme"
-	informers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token/v1"
-	listers "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/listers/githubappjwt2token/v1"
-	"github.com/kharkevich/github-app-jwt2token-controller/pkg/ghsutil"
-	"github.com/kharkevich/github-app-jwt2token-controller/pkg/tokenutil"
+	githubappjwt2tokenv1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
+	clientset "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
+	jwt2tokenAppScheme "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned/scheme"
+	informers "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token/v1"
+	listers "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/listers/githubappjwt2token/v1"
+	"github.com/technicaldomain/github-app-jwt2token-controller/pkg/ghsutil"
+	"github.com/technicaldomain/github-app-jwt2token-controller/pkg/tokenutil"
 )
 
 type DockerConfigJsonController struct {

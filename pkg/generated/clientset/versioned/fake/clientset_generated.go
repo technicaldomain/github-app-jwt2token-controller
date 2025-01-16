@@ -18,9 +18,9 @@ limitations under the License.
 package fake
 
 import (
-	clientset "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
-	githubappv1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1"
-	fakegithubappv1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1/fake"
+	clientset "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
+	githubappv1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1"
+	fakegithubappv1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

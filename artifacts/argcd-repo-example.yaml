@@ -10,6 +10,6 @@ stringData:
   name: helm
   password: supersecret
   type: helm
-  url: ghcr.io/kharkevich/helm-charts-private
+  url: ghcr.io/technicaldomain/helm-charts-private
   username: x-access-token
 type: Opaque

@@ -20,8 +20,8 @@ package v1
 import (
 	http "net/http"
 
-	githubappjwt2tokenv1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
-	scheme "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/scheme"
+	githubappjwt2tokenv1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
+	scheme "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 
@@ -32,7 +32,7 @@ type GithubappV1Interface interface {
 	GHSsGetter
 }
 
-// GithubappV1Client is used to interact with features provided by the githubapp.kharkevich.org group.
+// GithubappV1Client is used to interact with features provided by the githubapp.technicaldomain.xyz group.
 type GithubappV1Client struct {
 	restClient rest.Interface
 }

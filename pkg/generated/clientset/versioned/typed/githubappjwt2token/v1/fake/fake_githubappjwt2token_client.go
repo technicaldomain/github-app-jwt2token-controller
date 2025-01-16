@@ -18,7 +18,7 @@ limitations under the License.
 package fake
 
 import (
-	v1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1"
+	v1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned/typed/githubappjwt2token/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )

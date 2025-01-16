@@ -7,8 +7,8 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	githubappjwt2tokenv1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
-	clientset "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
+	githubappjwt2tokenv1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/apis/githubappjwt2token/v1"
+	clientset "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
 )
 
 func CreateOrUpdateGHS(ctx context.Context, clientset clientset.Interface, tokenHash, token, namespace string, expiresAt time.Time) error {

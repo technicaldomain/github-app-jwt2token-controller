@@ -22,9 +22,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
-	githubappjwt2token "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token"
-	internalinterfaces "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/internalinterfaces"
+	versioned "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/clientset/versioned"
+	githubappjwt2token "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token"
+	internalinterfaces "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

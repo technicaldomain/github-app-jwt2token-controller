@@ -18,8 +18,8 @@ limitations under the License.
 package githubappjwt2token
 
 import (
-	v1 "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token/v1"
-	internalinterfaces "github.com/kharkevich/github-app-jwt2token-controller/pkg/generated/informers/externalversions/internalinterfaces"
+	v1 "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/informers/externalversions/githubappjwt2token/v1"
+	internalinterfaces "github.com/technicaldomain/github-app-jwt2token-controller/pkg/generated/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to each of this group's versions.

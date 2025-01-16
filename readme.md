@@ -4,7 +4,7 @@
 ## ArgoCD repository password update
 
 ```yaml
-apiVersion: githubapp.kharkevich.org/v1
+apiVersion: githubapp.technicaldomain.xyz/v1
 kind: ArgoCDRepo
 metadata:
   name: example-argo-github-app
@@ -19,7 +19,7 @@ spec:
 ## Docker config generation
 
 ```yaml
-apiVersion: githubapp.kharkevich.org/v1
+apiVersion: githubapp.technicaldomain.xyz/v1
 kind: DockerConfigJson
 metadata:
   name: example-docker-config

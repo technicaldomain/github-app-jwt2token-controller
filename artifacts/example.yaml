@@ -1,4 +1,4 @@
-apiVersion: githubapp.kharkevich.org/v1
+apiVersion: githubapp.technicaldomain.xyz/v1
 kind: ArgoCDRepo
 metadata:
   name: example-argo-github-app
@@ -9,7 +9,7 @@ spec:
     - repository: repo-1294444111
       namespace: argocd
 # ---
-# apiVersion: githubapp.kharkevich.org/v1
+# apiVersion: githubapp.technicaldomain.xyz/v1
 # kind: ArgoCDRepo
 # metadata:
 #   name: example-argo-another-github-app
@@ -20,7 +20,7 @@ spec:
 #     - repository: repo-1294444122
 #       namespace: argocd
 ---
-apiVersion: githubapp.kharkevich.org/v1
+apiVersion: githubapp.technicaldomain.xyz/v1
 kind: DockerConfigJson
 metadata:
   name: example-docker-config

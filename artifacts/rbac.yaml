@@ -15,10 +15,10 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["get", "list", "watch", "update", "create", "delete"]
-- apiGroups: ["githubapp.kharkevich.org"]
+- apiGroups: ["githubapp.technicaldomain.xyz"]
   resources: ["argocdrepos", "dockerconfigjsons"]
   verbs: ["get", "list", "watch", "update", "patch", "create", "delete"]
-- apiGroups: ["githubapp.kharkevich.org"]
+- apiGroups: ["githubapp.technicaldomain.xyz"]
   resources: ["argocdrepos/status", "dockerconfigjsons/status"]
   verbs: ["update"]
 
