@@ -196,7 +196,6 @@ func (c *DockerConfigJsonController) syncHandler(ctx context.Context, objectRef 
 		return nil
 	}
 	logger.V(4).Info(MessageTokenValid)
-	c.recorder.Event(dockerConfigJson, corev1.EventTypeNormal, SuccessSynced, MessageTokenValid)
 	return nil
 }
 

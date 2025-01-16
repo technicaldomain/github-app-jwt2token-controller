@@ -195,7 +195,6 @@ func (c *ArgoCDRepoController) syncHandler(ctx context.Context, objectRef cache.
 		return nil
 	}
 	logger.V(4).Info(MessageTokenValid)
-	c.recorder.Event(argoCDRepo, corev1.EventTypeNormal, SuccessSynced, MessageTokenValid)
 	return nil
 }
 
