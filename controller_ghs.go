@@ -126,7 +126,7 @@ func shouldDeleteGHS(ghs *v1.GHS) bool {
 	}
 
 	// Check if the expiration time is set and has passed
-	if !ghs.Status.ExpiresAt.Time.IsZero() && ghs.Status.ExpiresAt.Time.Before(time.Now().Add(-15*time.Minute)) {
+	if !ghs.Status.ExpiresAt.Time.IsZero() && ghs.Status.ExpiresAt.Time.Before(time.Now().Add(+15*time.Minute)) {
 		return true
 	}
 
