@@ -30,6 +30,7 @@ type GithubappV1Interface interface {
 	ArgoCDReposGetter
 	DockerConfigJsonsGetter
 	GHSsGetter
+	SecretsGetter
 }
 
 // GithubappV1Client is used to interact with features provided by the githubapp.technicaldomain.xyz group.
@@ -47,6 +48,10 @@ func (c *GithubappV1Client) DockerConfigJsons(namespace string) DockerConfigJson
 
 func (c *GithubappV1Client) GHSs(namespace string) GHSInterface {
 	return newGHSs(c, namespace)
+}
+
+func (c *GithubappV1Client) Secrets(namespace string) SecretInterface {
+	return newSecrets(c, namespace)
 }
 
 // NewForConfig creates a new GithubappV1Client for the given config.

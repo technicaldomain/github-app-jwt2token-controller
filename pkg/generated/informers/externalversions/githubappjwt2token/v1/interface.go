@@ -29,6 +29,8 @@ type Interface interface {
 	DockerConfigJsons() DockerConfigJsonInformer
 	// GHSs returns a GHSInformer.
 	GHSs() GHSInformer
+	// Secrets returns a SecretInformer.
+	Secrets() SecretInformer
 }
 
 type version struct {
@@ -55,4 +57,9 @@ func (v *version) DockerConfigJsons() DockerConfigJsonInformer {
 // GHSs returns a GHSInformer.
 func (v *version) GHSs() GHSInformer {
 	return &gHSInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// Secrets returns a SecretInformer.
+func (v *version) Secrets() SecretInformer {
+	return &secretInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

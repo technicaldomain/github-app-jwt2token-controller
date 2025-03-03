@@ -41,7 +41,7 @@ type ArgoCDRepositories struct {
 }
 
 type ArgoCDRepoStatus struct {
-	Token     string      `json:"token,omitempty"`
+	Token string `json:"token,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -74,7 +74,7 @@ type DockerConfigSecrets struct {
 }
 
 type DockerConfigJsonStatus struct {
-	Token     string      `json:"token,omitempty"`
+	Token string `json:"token,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -107,4 +107,35 @@ type GHSList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []GHS `json:"items"`
+}
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type Secret struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   SecretSpec   `json:"spec,omitempty"`
+	Status SecretStatus `json:"status,omitempty"`
+}
+
+type SecretSpec struct {
+	PrivateKeySecret string    `json:"privateKeySecret"`
+	Secrets          []Secrets `json:"secrets"`
+}
+
+type Secrets struct {
+	Secret    string `json:"secret"`
+	Namespace string `json:"namespace"`
+}
+
+type SecretStatus struct {
+	Token string `json:"token,omitempty"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type SecretList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []Secret `json:"items"`
 }

@@ -1,5 +1,5 @@
 /*
-Copyright 2017 The Kubernetes Authors.
+Copyright 2025 Alexander Kharkevich.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -73,6 +73,9 @@ func main() {
 	ghsController := NewGHSController(ctx, kubeClient, gitHubAppJWT2TokenClient,
 		githubAppInformerFactory.Githubapp().V1().GHSs())
 
+	secretController := NewSecretController(ctx, kubeClient, gitHubAppJWT2TokenClient,
+		githubAppInformerFactory.Githubapp().V1().Secrets())
+
 	// notice that there is no need to run Start methods in a separate goroutine. (i.e. go kubeInformerFactory.Start(ctx.done())
 	// Start method is non-blocking and runs all registered informers in a dedicated goroutine.
 	kubeInformerFactory.Start(ctx.Done())
@@ -95,6 +98,13 @@ func main() {
 	go func() {
 		if err = ghsController.Run(ctx, 2); err != nil {
 			logger.Error(err, "Error running GHS controller")
+			klog.FlushAndExit(klog.ExitFlushTimeout, 1)
+		}
+	}()
+
+	go func() {
+		if err = secretController.Run(ctx, 2); err != nil {
+			logger.Error(err, "Error running Secret controller")
 			klog.FlushAndExit(klog.ExitFlushTimeout, 1)
 		}
 	}()

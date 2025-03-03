@@ -53,6 +53,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&DockerConfigJsonList{},
 		&GHS{},
 		&GHSList{},
+		&Secret{},
+		&SecretList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

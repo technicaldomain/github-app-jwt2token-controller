@@ -58,6 +58,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().DockerConfigJsons().Informer()}, nil
 	case v1.SchemeGroupVersion.WithResource("ghss"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().GHSs().Informer()}, nil
+	case v1.SchemeGroupVersion.WithResource("secrets"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Githubapp().V1().Secrets().Informer()}, nil
 
 	}
 

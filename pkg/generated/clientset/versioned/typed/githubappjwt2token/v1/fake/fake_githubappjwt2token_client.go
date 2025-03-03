@@ -39,6 +39,10 @@ func (c *FakeGithubappV1) GHSs(namespace string) v1.GHSInterface {
 	return newFakeGHSs(c, namespace)
 }
 
+func (c *FakeGithubappV1) Secrets(namespace string) v1.SecretInterface {
+	return newFakeSecrets(c, namespace)
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeGithubappV1) RESTClient() rest.Interface {

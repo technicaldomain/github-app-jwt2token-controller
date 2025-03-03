@@ -40,3 +40,11 @@ type GHSListerExpansion interface{}
 // GHSNamespaceListerExpansion allows custom methods to be added to
 // GHSNamespaceLister.
 type GHSNamespaceListerExpansion interface{}
+
+// SecretListerExpansion allows custom methods to be added to
+// SecretLister.
+type SecretListerExpansion interface{}
+
+// SecretNamespaceListerExpansion allows custom methods to be added to
+// SecretNamespaceLister.
+type SecretNamespaceListerExpansion interface{}

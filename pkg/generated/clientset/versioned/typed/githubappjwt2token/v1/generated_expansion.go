@@ -22,3 +22,5 @@ type ArgoCDRepoExpansion interface{}
 type DockerConfigJsonExpansion interface{}
 
 type GHSExpansion interface{}
+
+type SecretExpansion interface{}
